@@ -69,6 +69,10 @@
 			//  "horizontal": each slide moves from left to right
 			//  "vertical": each slide moves from top to bottom
 			animation: 'horizontal',
+			
+			// Do you want to show the selected slide immediately on init,
+			// regardless of the animation type?
+			noAnimationOnInit: false,
 
 			//  If you don't want to use a list to display your slides,
 			//  you can change it here. Not recommended and you'll need
@@ -150,7 +154,17 @@
 			self.$context.trigger(self._ + '.ready');
 
 			//  Everyday I'm chainin'
-			return self.animate(self.options.index || self.current, 'init');
+			if (self.options.index && self.options.noAnimationOnInit) {
+				// If we have to show a specific slide without animating to it,
+				// we set speed to 0 temporarily
+				var aux_speed = self.options.speed;
+				self.options.speed = 0;
+				var result = self.animate(self.options.index, 'init');
+				self.options.speed = aux_speed;
+			}
+			else {
+				return self.animate(self.options.index || self.current, 'init');
+			}
 		};
 
 		self.setup = function() {
