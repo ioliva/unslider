@@ -161,6 +161,7 @@
 				self.options.speed = 0;
 				var result = self.animate(self.options.index, 'init');
 				self.options.speed = aux_speed;
+				return result;
 			}
 			else {
 				return self.animate(self.options.index || self.current, 'init');
